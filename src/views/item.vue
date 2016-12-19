@@ -74,6 +74,42 @@ export default {
         },
 
         byClass(key, value) {
+            let disabled = null;
+
+            if (!this.selectedArr.length) {
+                disabled = !this.product.price.some(val => {
+                    return val.param
+                        && val.param[key]
+                        && (val.param[key] === value || val.param[key].indexOf(value) !== -1);
+                });
+            }
+            else {
+                let data = this.product.price.filter(val => {
+                    let flag = false;
+
+                    this.selectedArr.some(selectedKey => {
+                        if (!val.param || !val.param[selectedKey]) {
+                            return true;
+                        }
+
+                        if (val.param[selectedKey] === this.selected[selectedKey] || val.param[selectedKey].indexOf(this.selected[selectedKey]) > -1) {
+                            flag = true;
+                            return true;
+                        }
+                    });
+
+                    return flag;
+                });
+
+                console.log(JSON.stringify(data, null, 4));
+            }
+
+            if (disabled !== null) {
+                return {
+                    disabled
+                };
+            }
+
             return {
                 selected: this.selected[key] === value,
             };
@@ -138,6 +174,7 @@ ul {
     background-color: #cfcfcf; 
     color: #fff; 
     border-color: #cfcfcf; 
+    cursor: default; 
 }
 
 .clearfix:before,
