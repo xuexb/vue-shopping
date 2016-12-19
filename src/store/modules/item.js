@@ -68,7 +68,12 @@ const mutations = {
     },
 
     [types.ITEM_MUTATION_SELECTED](state, {key, value}) {
-        Vue.set(state.selected, key, value);
+        if (state.selected[key] === value) {
+            Vue.delete(state.selected, key);
+        }
+        else {
+            Vue.set(state.selected, key, value);
+        }
     }
 };
 

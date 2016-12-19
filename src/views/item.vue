@@ -23,7 +23,7 @@
                 </dl>
             </li>
             <li>
-                <el-button type="primary" :disabled="selectedArr.length !== product.param.length">添加到购物车</el-button>
+                <el-button type="primary" :disabled="selectedArr.length !== paramArr.length">添加到购物车</el-button>
             </li>
         </ul>
         <p v-if="status === 'loading'">加载中</p>
@@ -53,6 +53,10 @@ export default {
 
         selectedArr() {
             return Object.keys(this.selected);
+        },
+
+        paramArr() {
+            return Object.keys(this.product.param);
         }
     },
 
@@ -125,14 +129,12 @@ ul {
     white-space: nowrap;
     cursor: pointer; 
 }
-.choose-spec .selected, 
-.choose-spec dd:hover {
+.choose-spec .selected {
     background-color: #e3393c; 
     border-color: #e3393c;
     color: #fff; 
 }
-.choose-spec .disabled, 
-.choose-spec .disabled:hover {
+.choose-spec .disabled {
     background-color: #cfcfcf; 
     color: #fff; 
     border-color: #cfcfcf; 
